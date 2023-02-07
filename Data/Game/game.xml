@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <game xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <palette />
+  <palette>
+		<color bank="0" index="55" r="150" g="79" b="24"> </color>
+		<color bank="0" index="56" r="217" g="129" b="56"> </color>
+		<color bank="0" index="68" r="105" g="2" b="24"> </color>
+		<color bank="0" index="69" r="199" g="48" b="40"> </color>
+		<color bank="0" index="70" r="240" g="81" b="67"> </color>
+		<color bank="0" index="71" r="255" g="140" b="102"> </color>
+	</palette>
   <objects />
   <variables />
   <sounds>
