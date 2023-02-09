@@ -178,6 +178,7 @@ reserve function PlayerObject_MoveAnimate
 reserve function PlayerObject_StartSecondJump
 reserve function PlayerObject_ManiaRotate
 reserve function PlayerObject_HandleSuperPalMighty
+reserve function PlayerObject_StartHammerDrop
 reserve function PlayerObject_HandleHammerDrop
 
 // doublejumpstate for Amy
@@ -2470,6 +2471,47 @@ function PlayerObject_HandleHammerSpin
 		end if
 	end if
 	//Fly Cancel
+end function
+
+function PlayerObject_StartHammerDrop
+	if player.doubleJumpState == 1
+		if inputPress.buttonY == 1 //super check
+			CheckEqual(specialStage.emeralds, 127)
+			temp0 = checkResult
+			CheckGreater(player.rings, 49)
+			temp0 &= checkResult
+			CheckNotEqual(PlayerObject_SuperState, 1)
+			temp0 &= checkResult
+			CheckNotEqual(object[30].type, TypeName[Act Finish])
+			temp0 &= checkResult
+			CheckEqual(saved.superStates, 1)
+			temp0 &= checkResult
+			CheckEqual (player.invulnerable, 0)
+			temp0 &= checkResult
+			if temp0 == 1
+				currentPlayer = object.entityPos
+				CallFunction(PlayerObject_SuperTransform)
+			end if
+		end if
+		if object[0].jumpPress == 1 //if activating dbljump ability
+			object.value1 = 0
+			object.state = PlayerObject_HandleHammerDrop
+			object.xvel >>= 1
+			object.yvel = 0x800
+			player.doubleJumpState = 0
+			object.animation = ANI_WAITING
+			PlaySfx(SfxName[Release], 0)
+
+			//afterimages scripting here idfk how to do that rn and im a tired bitch lol i want to get it working at all first...
+
+			if object.entityPos == 0
+				camera.lockTimer = 8
+				screen.cameraStyle = 4
+			end if
+		
+		PlaySfx(SfxName[Mighty Drill], 0)
+		object.state = PlayerObject_HandleHammerDrop
+end if
 end function
 
 function PlayerObject_HandleHammerDrop
@@ -5436,7 +5478,7 @@ event ObjectStartup
 			CallFunction(PlayerObject_HandleSuperPalMighty)
 			object[0].propertyValue = 6
 			object[0].value30 = -5
-			object[0].value32 = PlayerObject_HandleHammerDrop
+			object[0].value32 = PlayerObject_StartHammerDrop
 		end switch
 
 		if saved.Speen == 1
