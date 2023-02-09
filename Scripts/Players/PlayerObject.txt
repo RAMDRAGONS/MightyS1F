@@ -2497,9 +2497,13 @@ function PlayerObject_StartHammerDrop
 			object.value1 = 0
 			object.state = PlayerObject_HandleHammerDrop
 			object.xvel >>= 1
-			object.yvel = 0x800
+			if player.gravityValue == 0x3800
+				object.yvel = 0xC0000
+			else
+				object.yvel = 0x80000
+			end if
 			player.doubleJumpState = 0
-			object.animation = ANI_WAITING
+			object.animation = ANI_JUMPING
 			PlaySfx(SfxName[Release], 0)
 
 			//afterimages scripting here idfk how to do that rn and im a tired bitch lol i want to get it working at all first...
@@ -2509,13 +2513,71 @@ function PlayerObject_StartHammerDrop
 				screen.cameraStyle = 4
 			end if
 		
-		PlaySfx(SfxName[Mighty Drill], 0)
-		object.state = PlayerObject_HandleHammerDrop
-end if
+			PlaySfx(SfxName[Mighty Drill], 0)
+			object.state = PlayerObject_HandleHammerDrop
+	end if
 end function
-
 function PlayerObject_HandleHammerDrop
+	if object.gravity == GRAVITY_GROUND
+		object.controlLock = 0
+		object.gravity = GRAVITY_AIR
 
+		temp0 = player.gravityValue // temp0 is dropForce equivalent
+		if player.gravityValue == 0x3800
+			temp0 += 0x20000
+		else
+			temp0 += 0x10000
+		end if
+		temp1 = 0 // temp1 is groundVel equivalent
+		temp2 = 0
+		temp2 >>= 2
+		temp1 -= temp2
+
+		temp3 = temp1
+		Cos256(temp1, object.angle)
+		temp3 *= temp1
+		temp3 += temp0
+		Sin256(temp1, object.angle)
+		temp3 *= temp1
+		temp3 >>= 8
+		object.xvel = temp3
+
+		temp4 = temp1
+		Sin256(temp5, object.angle)
+		temp4 *= temp5
+		temp4 -= temp0
+		Cos256(temp5, object.angle)
+		temp4 *= temp5
+		temp4 >>= 8
+		object.yvel = temp4
+		
+		object.animation = ANI_JUMPING
+
+		temp6 = temp1
+		temp6 += 0xF0
+		object.animationSpeed = temp6
+
+		StopSfx(SfxName[Mighty Drill])
+		PlaySfx(SfxName[Mighty Land], 0)
+		screen.shakeX = 0
+		screen.shakeY = 4
+
+		//dust scripting here im lazy
+
+		object.angle = 0
+		object.collisionMode = CMODE_FLOOR
+
+		if player.invincible > 0
+			if player.invincible < 8
+				player.invincible = 8
+			object.state = PlayerObject_HandleAir
+			end if
+		end if
+
+		if object.yvel <= 0x10000
+		object.state = PlayerObject_HandleAir
+		object.animation = ANI_JUMPING
+	end if
 end function
 
 
