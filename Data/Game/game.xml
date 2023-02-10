@@ -9,7 +9,10 @@
 		<color bank="0" index="71" r="255" g="140" b="102"> </color>
 	</palette>
   <objects />
-  <variables />
+  <variables>
+    <variable name="ANI_HAMMERDROP" value="52" />
+	<variable name="ANI_UNCURLING" value="53" />
+  </variables>
   <sounds>
     <soundfx name="Mighty Deflect" path="Global/MightyDeflect.wav" />
 	<soundfx name="Mighty Drill" path="Global/MightyDrill.wav" />

@@ -816,10 +816,12 @@ function PlayerObject_CheckHit
 	temp1 |= checkResult
 	CheckEqual(object[currentPlayer].animation, ANI_FLY_LIFT_TIRED)
 	temp1 |= checkResult
-		CheckEqual(object[currentPlayer].animation, ANI_HAMMER_JUMP)
-		temp0 |= checkResult
-		CheckEqual(object[currentPlayer].animation, ANI_HAMMER_SPEEN)
-		temp0 |= checkResult
+	CheckEqual(object[currentPlayer].animation, ANI_HAMMER_JUMP)
+	temp0 |= checkResult
+	CheckEqual(object[currentPlayer].animation, ANI_HAMMER_SPEEN)
+	temp0 |= checkResult
+	CheckEqual(object[currentPlayer].animation, ANI_HAMMERDROP)
+	temp0 |= checkResult
 	if temp1 == 1
 		CheckGreater(object[currentPlayer].ypos, object.ypos)
 		temp0 |= checkResult
@@ -876,10 +878,12 @@ function PlayerObject_BadnikBreak
 	temp1 |= checkResult
 	CheckEqual(object[currentPlayer].animation, ANI_FLY_LIFT_TIRED)
 	temp1 |= checkResult
-		CheckEqual(object[currentPlayer].animation, ANI_HAMMER_JUMP)
-		temp0 |= checkResult
-		CheckEqual(object[currentPlayer].animation, ANI_HAMMER_SPEEN)
-		temp0 |= checkResult
+	CheckEqual(object[currentPlayer].animation, ANI_HAMMER_JUMP)
+	temp0 |= checkResult
+	CheckEqual(object[currentPlayer].animation, ANI_HAMMER_SPEEN)
+	temp0 |= checkResult
+	CheckEqual(object[currentPlayer].animation, ANI_HAMMERDROP)
+	temp0 |= checkResult
 	if temp1 == 1
 		CheckGreater(object[currentPlayer].ypos, object.ypos)
 		temp0 |= checkResult
@@ -901,12 +905,14 @@ function PlayerObject_BadnikBreak
 		object[tempObjectPos].drawOrder = 4
 		PlaySfx(SfxName[Destroy], 0)
 		if object[currentPlayer].yvel > 0
-			if object[currentPlayer].ypos >= object.ypos
-				object[currentPlayer].yvel -= 0x10000
-			else
-				object[currentPlayer].yvel += object[currentPlayer].value25
-				object[currentPlayer].yvel += object[currentPlayer].value25
-				FlipSign(object[currentPlayer].yvel)
+			if object[currentPlayer].animation != ANI_HAMMERDROP
+				if object[currentPlayer].ypos >= object.ypos
+					object[currentPlayer].yvel -= 0x10000
+				else
+					object[currentPlayer].yvel += object[currentPlayer].value25
+					object[currentPlayer].yvel += object[currentPlayer].value25
+					FlipSign(object[currentPlayer].yvel)
+				end if
 			end if
 		else
 			object[currentPlayer].yvel += 0x10000
@@ -2503,7 +2509,7 @@ function PlayerObject_StartHammerDrop
 				object.yvel = 0x80000
 			end if
 			player.doubleJumpState = 0
-			object.animation = ANI_JUMPING
+			object.animation = ANI_HAMMERDROP
 			PlaySfx(SfxName[Release], 0)
 
 			//afterimages scripting here idfk how to do that rn and im a tired bitch lol i want to get it working at all first...
