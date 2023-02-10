@@ -180,6 +180,7 @@ reserve function PlayerObject_ManiaRotate
 reserve function PlayerObject_HandleSuperPalMighty
 reserve function PlayerObject_StartHammerDrop
 reserve function PlayerObject_HandleHammerDrop
+reserve function PlayerObject_CheckShellHit
 
 // doublejumpstate for Amy
 //0 = Not jumped
@@ -2595,6 +2596,37 @@ function PlayerObject_HandleHammerDrop
 	end if
 end function
 
+function PlayerObject_CheckShellHit // Used to check if non-projectile entity should be deflected by Mighty, idk if this will be used ever or if it even works atm
+	if stage.playerListPos == 6
+		CheckEqual(object[currentPlayer].animation, ANI_LOOKINGDOWN)
+		temp0 = checkResult
+		CheckEqual(object[currentPlayer].animation, ANI_JUMPING)
+		temp0 |= checkResult
+		CheckEqual(object[currentPlayer].animation, ANI_SPINDASH)
+		temp0 |= checkResult
+		CheckEqual(object[currentPlayer].animation, ANI_HAMMERDROP)
+		temp0 |= checkResult
+		if temp0 == 1
+			if player.uncurlTimer == 0
+				PlaySfx(SfxName[PimPom], 0)
+				player.uncurlTimer = 30
+			end if
+
+			temp0 = 0 // equivalent to angle
+			temp1 = object[currentPlayer].xpos
+			temp1 -= object.xpos
+			temp2 = object[currentPlayer].ypos
+			temp2 -= object.ypos
+			ATan2(temp0, temp1, temp2)
+			Cos256(temp3, temp0)
+			Sin256(temp4, temp0)
+			object.xvel *= temp3
+			object.yvel *= temp4
+			checkResult = 1
+		else
+			checkResult = 0
+		end if
+end function
 
 function PlayerObject_StartTailsFlight
 	if player.doubleJumpState == 1

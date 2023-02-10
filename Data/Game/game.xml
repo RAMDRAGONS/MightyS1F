@@ -11,13 +11,15 @@
   <objects />
   <variables>
     <variable name="ANI_HAMMERDROP" value="52" />
-	<variable name="ANI_UNCURLING" value="53" />
+	<variable name="ANI_UNSPIN" value="53" />
+	<variable name="player.uncurlTimer" value="0" />
   </variables>
   <sounds>
     <soundfx name="Mighty Deflect" path="Global/MightyDeflect.wav" />
 	<soundfx name="Mighty Drill" path="Global/MightyDrill.wav" />
 	<soundfx name="Mighty Land" path="Global/MightyLand.wav" />
 	<soundfx name="Mighty Unspin" path="Global/MightyUnspin.wav" />
+	<soundfx name="PimPom" path="Global/PimPom.wav" />
   </sounds>
   <players>
     <player name="MIGHTY" />
