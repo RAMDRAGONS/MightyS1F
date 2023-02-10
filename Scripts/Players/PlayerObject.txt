@@ -838,6 +838,14 @@ function PlayerObject_CheckHit
 			object[currentPlayer].value1 = 0
 			object[currentPlayer].animation = ANI_GLIDING_DROP
 			object[currentPlayer].state = PlayerObject_KnuxGlideDrop
+		else
+			if object[currentPlayer].animation == ANI_HAMMERDROP
+				object[currentPlayer].state = PlayerObject_HandleAir
+				object[currentPlayer].animation = ANI_JUMPING
+				if object[currentPlayer].yvel < -0x40000
+					object[currentPlayer].yvel = -0x40000
+				end if
+			end if
 		end if
 		checkResult = 1
 	else
@@ -2539,6 +2547,7 @@ function PlayerObject_HandleHammerDrop
 		temp2 >>= 2
 		temp1 -= temp2
 
+		// this whole section of temp var math is a mess at first but it's basically just a split up messy version of mania's logic for calculating velocity upon hitting the ground with hammerdrop
 		temp3 = temp1
 		Cos256(temp1, object.angle)
 		temp3 *= temp1
