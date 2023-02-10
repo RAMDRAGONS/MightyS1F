@@ -134,6 +134,8 @@ event ObjectMain
 			temp0 |= checkResult
 			CheckEqual(object[currentPlayer].animation, ANI_HAMMER_SPEEN)
 			temp0 |= checkResult
+			CheckEqual(object[currentPlayer].animation, ANI_HAMMERDROP)
+			temp0 |= checkResult
 			
 			if temp0 == 1
 				if object[currentPlayer].value16 == 0
@@ -142,9 +144,11 @@ event ObjectMain
 						object.state = 0
 						CreateTempObject(TypeName[Smoke Puff], 0, object.xpos, object.ypos)
 						object[tempObjectPos].drawOrder = 4
+						if object[currentPlayer].animation != ANI_HAMMERDROP
 						object[currentPlayer].yvel += object[currentPlayer].value25
 						object[currentPlayer].yvel += object[currentPlayer].value25
 						FlipSign(object[currentPlayer].yvel)
+						end if
 						object.type = TypeName[Broken Monitor]
 						if object.priority != PRIORITY_XBOUNDS_DESTROY
 							object.priority = PRIORITY_ACTIVE
