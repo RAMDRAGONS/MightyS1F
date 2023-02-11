@@ -2554,11 +2554,6 @@ function PlayerObject_StartHammerDrop
 			PlaySfx(SfxName[Release], 0)
 
 			//afterimages scripting here idfk how to do that rn and im a tired bitch lol i want to get it working at all first...
-
-			if object.entityPos == 0
-				camera.lockTimer = 8
-				screen.cameraStyle = 4
-			end if
 		
 			PlaySfx(SfxName[Mighty Drill], 0)
 			object.state = PlayerObject_HandleHammerDrop
