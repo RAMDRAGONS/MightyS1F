@@ -1373,6 +1373,9 @@ function PlayerObject_ProcessPlayer
 			end if
 		end if
 	end if
+	if player.uncurlTimer > 0
+		player.uncurlTimer--
+	end if
 	if player.invincible > 0
 		player.invincible--
 		if player.invincible == 0
