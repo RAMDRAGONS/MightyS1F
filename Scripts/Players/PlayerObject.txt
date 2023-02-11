@@ -968,16 +968,45 @@ function PlayerObject_BadnikBreak
 			currentPlayer = temp0
 		end if
 	else
-		if object[currentPlayer].state != PlayerObject_Death
-			if object[currentPlayer].value7 == 0
-				if object[currentPlayer].value8 == 0
-					object[currentPlayer].state = PlayerObject_Hurt
-					if object[currentPlayer].xpos > object.xpos
-						object[currentPlayer].speed = 0x20000
-					else
-						object[currentPlayer].speed = -0x20000
+		// sorry for all of this, anyone who looks here. i could not for the life of me get it working any other way. i tried!!!! trust me!!!!
+		if stage.playerListPos != 6
+			if object[currentPlayer].state != PlayerObject_Death
+				if object[currentPlayer].value7 == 0
+					if object[currentPlayer].value8 == 0
+						object[currentPlayer].state = PlayerObject_Hurt
+						if object[currentPlayer].xpos > object.xpos
+							object[currentPlayer].speed = 0x20000
+						else
+							object[currentPlayer].speed = -0x20000
+						end if
 					end if
 				end if
+			end if
+			else
+			if object[currentPlayer].animation == ANI_LOOKINGDOWN
+				//if player.uncurlTimer > 0
+
+				PlaySfx(SfxName[PimPom], 0)
+				player.uncurlTimer = 30
+
+				if object.xpos > object[currentPlayer].xpos
+					object[currentPlayer].speed = -0x10000
+				else
+					object[currentPlayer].speed = 0x10000
+				endif
+			else
+			if object[currentPlayer].state != PlayerObject_Death
+				if object[currentPlayer].value7 == 0
+					if object[currentPlayer].value8 == 0
+						object[currentPlayer].state = PlayerObject_Hurt
+						if object[currentPlayer].xpos > object.xpos
+							object[currentPlayer].speed = 0x20000
+						else
+							object[currentPlayer].speed = -0x20000
+						end if
+					end if
+				end if
+			end if
 			end if
 		end if
 	end if
