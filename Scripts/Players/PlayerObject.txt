@@ -1150,19 +1150,6 @@ function PlayerObject_SpikeHit
 		if object[currentPlayer].value7 == 0
 			if object[currentPlayer].state != PlayerObject_Hurt
 				if object[currentPlayer].state != PlayerObject_Knockback
-					if stage.playerListPos == 6
-						CheckEqual(object[currentPlayer].animation, ANI_JUMPING)
-						temp0 |= checkResult
-						CheckEqual(object[currentPlayer].animation, ANI_SPINDASH)
-						temp0 |= checkResult
-						CheckEqual(object[currentPlayer].animation, ANI_HAMMERDROP)
-						temp0 |= checkResult
-						if temp0 == 1
-							if object[currentplayer].xvel < 0x20000
-								//switch object.state
-									
-						end if
-					else
 					temp0 = saved.spikeBehavior
 					if options.attractMode == 1
 						temp0 = 0
